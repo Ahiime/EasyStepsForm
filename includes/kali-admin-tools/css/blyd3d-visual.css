@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+    --blyd3d-dash-background-color: #000;
+    --blyd3d-dash-color: #fff;
+    --blyd3d-dash-fontfamily: 'Roboto', sans-serif;
+    --blyd3d-dash-fontsize: 14px;
+    --blyd3d-dash-lineheight: 2.5em;
+    --blyd3d-dash-active: #2271b1;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+}
+
+.blyd3d-admin-tools-block {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    color: var(--blyd3d-dash-color);
+    font-family: var(--blyd3d-dash-fontfamily);
+    font-size: var(--blyd3d-dash-fontsize);
+    line-height: var(--blyd3d-dash-lineheight);
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.blyd3d-nav {
+    background-color: var(--blyd3d-dash-background-color);
+    width: 10em;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    padding: 1em;
+    padding-left: 0;
+}
+
+.blyd3d-nav-sub {
+    width: 100%;
+    padding: .5em;
+    cursor: pointer;
+    border-bottom: .2px solid #363333;
+}
+
+.blyd3d-nav-sub:last-of-type {
+    border-bottom: none;
+}
+
+.blyd3d-ico {
+    margin-right: .5em;
+}
+
+.blyd3d-active {
+    background-color: var(--blyd3d-dash-active);
+}
+
+.blyd3d-main {
+    width: calc(100% - 1em);
+    height: calc(100% - 1em);
+    margin: 1em;
+    color: var(--blyd3d-dash-background-color);
+}
+
+.blyd3d-block-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.blyd3d-input-container input[type="text"],
+.blyd3d-input-container input[type="number"],
+.blyd3d-input-container input[type="tel"],
+.blyd3d-input-container input[type="password"],
+.blyd3d-input-container textarea {
+    border: 1px solid #b5b5b5;
+    height: 2em;
+    border-radius: .3em;
+    min-width: 15em;
+}
+
+.blyd3d-main button {
+    background-color: #0f5ecc;
+    color: #fff;
+    padding: .5em;
+    outline: none;
+    border: 1px solid #0f5ecc;
+    border-radius: .2em;
+    cursor: pointer;
+}
+
+.blyd3d-block-header {
+    margin-bottom: 1em;
+}
+
+.blyd3d-block-input-container {
+    margin-left: 1em;
+    border-left: 3px solid #2f56fc;
+    padding-left: 1em;
+}
+
+.blyd3d-block-input-container .blyd3d-ctn-input {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
+    align-items: center;
+}
+
+.blyd3d-block-title {
+    margin: 0;
+}
+
+.blyd3d-ctn-header {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    align-items: center;
+    align-content: center;
+}
+
+.blyd3d-ctn-header div {
+    width: 100%;
+    text-align: center;
+}
+
+.blyd3d-remove-line {
+    cursor: pointer;
+    background-color: #6b22f5;
+    color: #fff;
+    border-radius: 100%;
+    height: 1.5em;
+    width: 1.5em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
