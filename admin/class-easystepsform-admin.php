@@ -180,7 +180,7 @@ class Easystepsform_Admin {
 		 */
 	public function add_submenu() {
 		if ( class_exists( 'WooCommerce' ) ) {
-			global $submenu;
+			global $submenu, $menu;
 			$icon = EASYSTEPSFORM_URL . 'includes/images/icon.png';
 
 			add_menu_page(
@@ -210,6 +210,35 @@ class Easystepsform_Admin {
 				'edit.php?post_type=easy-step-form-step',
 				false
 			);
+
+			add_submenu_page(
+				'easy-step-form-manage',
+				__( 'Input', 'easystepsform' ),
+				__( 'Input', 'easystepsform' ),
+				'manage_product_terms',
+				'edit.php?post_type=easy-step-form-input',
+				false
+			);
+
+			$args = array(
+				'post_type'      => 'easy-step-form-input',
+				'meta_key'       => 'easy-step-form-input-status',
+				'meta_value'     => 'unread',
+				'posts_per_page' => -1,
+			);
+
+			$read_posts = count( get_posts( $args ) );
+
+			$submenu = $GLOBALS['submenu'];
+
+			foreach ( $submenu['easy-step-form-manage'] as &$subitem ) {
+				if ( isset( $subitem[2] ) && $subitem[2] == 'edit.php?post_type=easy-step-form-input' ) {
+					$subitem[0] .= '<span class="update-plugins count-' . $read_posts . '"><span class="plugin-count">' . $read_posts . '</span></span>';
+					break;
+				}
+			}
+
+			$GLOBALS['submenu']['easy-step-form-manage'] = $submenu['easy-step-form-manage'];
 		}
 	}
 
@@ -224,6 +253,7 @@ class Easystepsform_Admin {
 	public function register_post_type() {
 		$this->register_post_type_arg( 'Form', 'easy-step-form-add' );
 		$this->register_post_type_arg( 'Step', 'easy-step-form-step' );
+		$this->register_post_type_arg( 'Input', 'easy-step-form-input' );
 	}
 
 	public function register_post_type_arg( $name, $custom_post_type ) {
@@ -261,6 +291,7 @@ class Easystepsform_Admin {
 	}
 
 	public function add_metaboxes() {
+		// Add form meta box.
 		add_meta_box(
 			'easy-step-form-add',
 			__( 'Add details', 'easystepsform' ),
@@ -282,6 +313,8 @@ class Easystepsform_Admin {
 			'easy-step-form-add'
 		);
 
+		// Add step meta box.
+
 		add_meta_box(
 			'easy-step-form-stepper',
 			__( 'Header details', 'easystepsform' ),
@@ -295,6 +328,48 @@ class Easystepsform_Admin {
 			array( $this, 'add_stepper_fields' ),
 			'easy-step-form-step'
 		);
+
+		// Form input meta box.
+
+		add_meta_box(
+			'easy-step-form-input-field',
+			__( 'Input data', 'easystepsform' ),
+			array( $this, 'add_stepper_input_fields' ),
+			'easy-step-form-input'
+		);
+	}
+
+	public function add_stepper_input_fields( $post ) {
+		$form_data = get_post_meta( $post->ID, 'easy-step-form-input', true );
+
+		if ( ! empty( $form_data ) ) {
+			echo '<table style="width: 100%; border-collapse: collapse;">';
+			echo '<thead>';
+			echo '<tr>';
+			echo '<th style="border: 1px solid #ddd; padding: 8px;">Champ</th>';
+			echo '<th style="border: 1px solid #ddd; padding: 8px;">Valeur</th>';
+			echo '</tr>';
+			echo '</thead>';
+			echo '<tbody>';
+
+			foreach ( $form_data as $field => $value ) {
+				echo '<tr>';
+				echo '<td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">' . esc_html( wp_unslash($field) ) . '</td>';
+
+				if ( filter_var( $value, FILTER_VALIDATE_URL ) ) {
+					echo '<td style="border: 1px solid #ddd; padding: 8px;"><a href="' . esc_url( $value ) . '" target="_blank">' . esc_html( basename( $value ) ) . '</a></td>';
+				} else {
+					echo '<td style="border: 1px solid #ddd; padding: 8px;">' . esc_html( $value ) . '</td>';
+				}
+
+				echo '</tr>';
+			}
+
+			echo '</tbody>';
+			echo '</table>';
+		} else {
+			echo '<p>Aucune donnée disponible pour ce post.</p>';
+		}
 	}
 
 	public function add_detail() {
@@ -357,7 +432,7 @@ class Easystepsform_Admin {
 
 			global $easy_steps_form_tpl;
 			?>
-			<input type="hidden" name="easy-steps-form-nonce" value="<?php echo esc_html( wp_create_nonce( 'easy-steps-form-nonce' ) ); ?>"/>
+			<input type="hidden" name="easy-steps-form-nonce" value="<?php echo esc_attr( wp_create_nonce( 'easy-steps-form-nonce' ) ); ?>"/>
 		</div>
 		<script>
 			var easy_steps_form_tpl =<?php echo json_encode( $easy_steps_form_tpl ); ?>;
@@ -386,8 +461,8 @@ class Easystepsform_Admin {
 				foreach ( $wc_product as $product ) {
 					$linked_product[ $product->ID ] = $product->post_title;
 				}
-				
-				$linked_products =  array(
+
+				$linked_products = array(
 					'title'   => __( 'Link product', 'easystepsform' ),
 					'name'    => 'easy-form-adding[link-product]',
 					'type'    => 'select',
@@ -396,11 +471,11 @@ class Easystepsform_Admin {
 					'options' => $linked_product,
 				);
 
-				$pricing_option_title =  array(
-					'title'   => __( 'Pricing option title', 'easystepsform' ),
-					'name'    => 'easy-form-adding[pricing-title]',
-					'type'    => 'text',
-					'desc'    => __( 'This is the pricing option title', 'easystepsform' ),
+				$pricing_option_title = array(
+					'title' => __( 'Pricing option title', 'easystepsform' ),
+					'name'  => 'easy-form-adding[pricing-title]',
+					'type'  => 'text',
+					'desc'  => __( 'This is the pricing option title', 'easystepsform' ),
 				);
 
 				$name = array(
@@ -439,7 +514,7 @@ class Easystepsform_Admin {
 					'type'              => 'number',
 					'custom_attributes' => array(
 						'placeholder' => 'The title',
-						'step' => 'any'
+						'step'        => 'any',
 					),
 					'desc'              => '',
 				);
@@ -464,7 +539,6 @@ class Easystepsform_Admin {
 					'add_btn_label'   => __( 'Add radio note', 'easystepsform' ),
 				);
 
-				
 				$end = array( 'type' => 'sectionend' );
 
 				$settings = apply_filters(
@@ -483,14 +557,14 @@ class Easystepsform_Admin {
 						$end,
 					)
 				);
-	
+
 				echo wp_kses(
 					Easy_Steps_Form_Admin_Tools::get_fields( $settings ),
 					Easy_Steps_Form_Admin_Tools::get_allowed_tags()
 				);
 
 				global $easy_steps_form_tpl;
-				
+
 				?>
 				<script>
 					var easy_steps_form_tpl =<?php echo json_encode( $easy_steps_form_tpl ); ?>;
@@ -550,12 +624,12 @@ class Easystepsform_Admin {
 						$end,
 					)
 				);
-	
+
 				echo wp_kses(
 					Easy_Steps_Form_Admin_Tools::get_fields( $settings ),
 					Easy_Steps_Form_Admin_Tools::get_allowed_tags()
 				);
-				
+
 				global $easy_steps_form_tpl;
 
 				?>
@@ -630,7 +704,7 @@ class Easystepsform_Admin {
 			);
 
 			?>
-			<input type="hidden" name="easy-steps-form-nonce" value="<?php echo esc_html( wp_create_nonce( 'easy-steps-form-nonce' ) ); ?>"/>
+			<input type="hidden" name="easy-steps-form-nonce" value="<?php echo esc_attr( wp_create_nonce( 'easy-steps-form-nonce' ) ); ?>"/>
 		</div>
 		<?php
 	}
@@ -791,7 +865,7 @@ class Easystepsform_Admin {
 		}
 	}
 
-	
+
 	/**
 	 * Save Stepper post meta.
 	 *
@@ -810,6 +884,7 @@ class Easystepsform_Admin {
 
 	/**
 	 * Add custom column
+	 *
 	 * @param mixed $columns
 	 * @return mixed
 	 */
@@ -820,14 +895,14 @@ class Easystepsform_Admin {
 
 		/**
 		 * Display custom column.
-		 * 
+		 *
 		 * @param mixed $column The column name
 		 * @param mixed $post_id The post id
 		 * @return void
 		 */
-		public function display_custom_column( $column, $post_id ) {
-			if ('easy-form-adding-short-code' === $column) {
-				echo '[easy-steps-form id="' . $post_id . '"]';
-			}
+	public function display_custom_column( $column, $post_id ) {
+		if ( 'easy-form-adding-short-code' === $column ) {
+			echo '[easy-steps-form id="' . $post_id . '"]';
 		}
+	}
 }

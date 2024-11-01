@@ -1132,17 +1132,21 @@ class Easy_Steps_Form_Admin_Tools {
 			'data-id'          => array(),
 			'data-target'      => array(),
 		);
-		$allowed_tags['select']   = array(
-			'id'         => array(),
-			'name'       => array(),
-			'class'      => array(),
-			'data-tpl'   => array(),
-			'style'      => array(),
-			'multiple'   => array(),
-			'tabindex'   => array(),
-			'data-rule'  => array(),
-			'data-group' => array(),
+		$allowed_tags['select']   = array_merge(
+			array(
+				'id'         => array(),
+				'name'       => array(),
+				'class'      => array(),
+				'data-tpl'   => array(),
+				'style'      => array(),
+				'multiple'   => array(),
+				'tabindex'   => array(),
+				'data-rule'  => array(),
+				'data-group' => array(),
+			),
+			$allowed_tags['input']
 		);
+		
 		$allowed_tags['optgroup'] = array(
 			'id'       => array(),
 			'name'     => array(),

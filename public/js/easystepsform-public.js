@@ -53,7 +53,7 @@
                 return true;
             }
 
-          
+
             current_fs = $(this).parent();
             next_fs = $(this).parent().next();
             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
@@ -65,7 +65,9 @@
             current_fs.addClass('easy-steps-form-hidden');
         });
 
-        $(".submit").on('click', function () {
+        $("#easy-steps-forms").on("submit", function (e) {
+            e.preventDefault()
+
             $(".easy-steps-form-steps").validate({
                 errorClass: 'invalid',
                 errorElement: 'span',
@@ -81,21 +83,48 @@
             });
 
             if ((!$('.easy-steps-form-steps').valid())) {
-                return false;
+                console.log("ddd")
+                return false
             }
-       
+
             current_fs = $(this).parent();
             next_fs = $(this).parent().next();
-            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-            next_fs.removeClass('easy-steps-form-hidden');
-            next_fs.addClass('easy-steps-form-show');
 
-            current_fs.removeClass('easy-steps-form-show');
-            current_fs.addClass('easy-steps-form-hidden');
-        });
+            var formData = new FormData(this);
+
+            formData.append('action', 'easy_step_register_form')
+
+            $.ajax({
+                url: easyStepsForm.ajaxUrl,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+
+                    let data = JSON.parse(response);
+
+                    if(typeof data.success !== "undefined") {
+            
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+        
+                        next_fs.removeClass('easy-steps-form-hidden');
+                        next_fs.addClass('easy-steps-form-show');
+            
+                        current_fs.removeClass('easy-steps-form-show');
+                        current_fs.addClass('easy-steps-form-hidden');
+                        
+                        document.location.href = data.cart_url;
+                    }
+                },
+                error: function (xhr, status, error) {
+                    
+                }
+            });
+        })
 
         $(".previous").click(function () {
-          
+
             current_fs = $(this).parent();
             previous_fs = $(this).parent().prev();
             $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");

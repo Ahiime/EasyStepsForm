@@ -4,6 +4,7 @@
         "metaboxes",
         "multistep",
         "shortcodes",
-        "subpackage"
+        "subpackage",
+        "unhighlight"
     ]
 }
