@@ -220,7 +220,7 @@ class Easy_Steps_Form_Content {
   public function get_final_content() {
     $pages = count($this->steps);
 
-    $name = sanitize_key( $this->form['additional-note'] );
+    $name = sanitize_title( $this->form['additional-note'] );
 
     $uniq_id = uniqid( $name . '-' );
     $uniq_id2 = uniqid( $name . '-' );
@@ -258,7 +258,7 @@ class Easy_Steps_Form_Content {
                     <label for="<?php echo esc_attr( $radio_id ); ?>"><?php echo esc_html( $option['name'] ); ?></label>
                     <input type="radio"
                     id="<?php echo esc_attr( $radio_id ); ?>"
-                    name="<?php echo esc_attr( sanitize_key( $this->form['pricing-title'] ) ); ?>"
+                    name="<?php echo esc_attr( sanitize_title( $this->form['pricing-title'] ) ); ?>"
                     value="<?php echo esc_attr( $option['price'] ); ?>"
                     required
                     data-rule-required="true"
@@ -273,9 +273,9 @@ class Easy_Steps_Form_Content {
 
         <?php
         foreach ( $this->form['radio-note'] as $option ) :
-          $uniqid = uniqid( sanitize_key( $option['note-name'] ) . '-' );
-          $uniqid2 = uniqid( sanitize_key( $option['note-name'] ) . '-' ); 
-          $uniqid3 = uniqid( sanitize_key( $option['note-name'] ) . '-' ); 
+          $uniqid = uniqid( sanitize_title( $option['note-name'] ) . '-' );
+          $uniqid2 = uniqid( sanitize_title( $option['note-name'] ) . '-' ); 
+          $uniqid3 = uniqid( sanitize_title( $option['note-name'] ) . '-' ); 
           ?>
           <div class="form-item field hs-form-field">
             <label for="<?php echo esc_attr( $uniqid ) ?>">
@@ -286,7 +286,7 @@ class Easy_Steps_Form_Content {
                   <label for="<?php echo esc_attr( $uniqid2 ); ?>"><?php echo esc_html( 'Oui' ); ?></label>
                   <input type="radio"
                   id="<?php echo esc_attr( $uniqid2 ); ?>"
-                  name="<?php echo esc_attr( sanitize_key( $option['note-name'] ) ); ?>"
+                  name="<?php echo esc_attr( sanitize_title( $option['note-name'] ) ); ?>"
                   value="oui"
                   checked
                   required
@@ -297,7 +297,7 @@ class Easy_Steps_Form_Content {
                   <label for="<?php echo esc_attr( $uniqid3 ); ?>"><?php echo esc_html( 'Non' ); ?></label>
                   <input type="radio"
                   id="<?php echo esc_attr( $uniqid3 ); ?>"
-                  name="<?php echo esc_attr( sanitize_key( $option['note-name'] ) ); ?>"
+                  name="<?php echo esc_attr( sanitize_title( $option['note-name'] ) ); ?>"
                   value="non"
                   required
                   data-rule-required="true"
@@ -319,7 +319,6 @@ class Easy_Steps_Form_Content {
         <h2 class="fs-title">It's on the way!</h2>
         <h3 class="fs-subtitle">Thank you for trying out our marketing grader, please go check your email for your
           fundraising report card and some helpful tips to improve it!</h3>
-        <div class="explanation btn btn-small modal-trigger" data-modal-id="modal-3">Qu'est ce que s'est ?</div>
       </fieldset>
     <?php
 
@@ -354,7 +353,7 @@ class Easy_Steps_Form_Content {
                 <h3 class="fs-subtitle"><?php echo esc_html( $step['description'] ?? '' ) ?></h3>
                 <?php
                   foreach ($step['field'] as $field) {
-                    $uniq_key = uniqid( sanitize_key( $field['title'] ) . '-' );
+                    $uniq_key = uniqid( sanitize_title( $field['title'] ) . '-' );
                     
                     ?>
                       <div class="hs_<?php echo esc_attr( $field['title'] ) ?> field hs-form-field">
@@ -396,6 +395,7 @@ class Easy_Steps_Form_Content {
         ?>
         <input type="hidden" name="easy-steps-form-nonce" value="<?php echo esc_attr( wp_create_nonce( 'easy-steps-form-nonce' ) ); ?>"/>
         <input type="hidden" name="link-product" value="<?php echo esc_attr( $this->form['link-product'] ); ?>"/>
+        <input type="hidden" name="form-id" value="<?php echo esc_attr( $this->formID ); ?>"/>
       </form>
     <?php
   }

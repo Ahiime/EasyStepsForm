@@ -166,11 +166,12 @@ class Easystepsform_Public {
 
 		$read_posts = count( get_posts( $args ) );
 
+
 		$post_id = wp_insert_post(
 			array(
 				'post_status' => 'publish',
 				'post_type'   => 'easy-step-form-input',
-				'post_title'  => 'Requete ' . ($read_posts + 1),
+				'post_title'  => 'Requete ' . get_the_title( $_POST['form-id'] ),
 			)
 		);
 

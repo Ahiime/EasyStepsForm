@@ -352,9 +352,17 @@ class Easystepsform_Admin {
 			echo '</thead>';
 			echo '<tbody>';
 
+			$unauthorize = array('link-product', 'form-id', 'action', 'easy-steps-form-nonce');
+
 			foreach ( $form_data as $field => $value ) {
+				if(in_array($field, $unauthorize, true)) continue;
+
+				$field_value = wp_unslash($field);
+				$field_value = ucfirst( str_replace( '-', ' ', $field_value ) );
+				$field_value = ucfirst( str_replace( '_', ' ', $field_value ) );
+				
 				echo '<tr>';
-				echo '<td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">' . esc_html( wp_unslash($field) ) . '</td>';
+				echo '<td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">' . esc_html( $field_value ) . '</td>';
 
 				if ( filter_var( $value, FILTER_VALIDATE_URL ) ) {
 					echo '<td style="border: 1px solid #ddd; padding: 8px;"><a href="' . esc_url( $value ) . '" target="_blank">' . esc_html( basename( $value ) ) . '</a></td>';

@@ -102,9 +102,7 @@
                 processData: false,
                 success: function (response) {
 
-                    let data = JSON.parse(response);
-
-                    if(typeof data.success !== "undefined") {
+                    if(typeof response.success !== "undefined") {
             
                         $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
         
