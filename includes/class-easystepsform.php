@@ -165,8 +165,11 @@ class Easystepsform {
 		$this->loader->add_action( 'save_post_easy-step-form-step', $plugin_admin, 'save_stepper' );
 		$this->loader->add_action( 'save_post_easy-step-form-add', $plugin_admin, 'save_add_form' );
 
-		$this->loader->add_action( 'manage_easy-step-form-add_posts_custom_column', $plugin_admin, 'display_custom_column', 10, 2 );
 		$this->loader->add_filter( 'manage_easy-step-form-add_posts_columns', $plugin_admin, 'add_custom_column', priority: 10);
+		$this->loader->add_action( 'manage_easy-step-form-add_posts_custom_column', $plugin_admin, 'display_custom_column', 10, 2 );
+
+		$this->loader->add_filter( 'manage_easy-step-form-input_posts_columns', $plugin_admin, 'add_input_column', priority: 10);
+		$this->loader->add_action( 'manage_easy-step-form-input_posts_custom_column', $plugin_admin, 'display_input_custom_column', 10, 2 );
 
 	}
 

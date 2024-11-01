@@ -898,19 +898,49 @@ class Easystepsform_Admin {
 	 */
 	public function add_custom_column( $columns ) {
 		$columns['easy-form-adding-short-code'] = 'ShortCode';
+		$columns['easy-form-adding-form-id'] = 'FormId';
+		$columns['easy-form-adding-product-id'] = 'Product Id';
 		return $columns;
 	}
 
-		/**
-		 * Display custom column.
-		 *
-		 * @param mixed $column The column name
-		 * @param mixed $post_id The post id
-		 * @return void
-		 */
+	/**
+	 * Add custom column
+	 *
+	 * @param mixed $columns
+	 * @return mixed
+	 */
+	public function add_input_column( $columns ) {
+		$columns['easy-form-adding-form-id'] = 'Form Id';
+		$columns['easy-form-adding-product-id'] = 'Product Id';
+		return $columns;
+	}
+
+	/**
+	 * Display custom column.
+	 *
+	 * @param mixed $column The column name
+	 * @param mixed $post_id The post id
+	 * @return void
+	 */
 	public function display_custom_column( $column, $post_id ) {
 		if ( 'easy-form-adding-short-code' === $column ) {
 			echo '[easy-steps-form id="' . $post_id . '"]';
+		}
+	}
+
+	/**
+	 * Display custom column.
+	 *
+	 * @param mixed $column The column name
+	 * @param mixed $post_id The post id
+	 * @return void
+	 */
+	public function display_input_custom_column( $column, $post_id ) {
+		$meta = get_post_meta($post_id, 'easy-step-form-input', true);
+		if('easy-form-adding-form-id' === $column) {
+			echo $meta['form-id'] ?? '';
+		} else if('easy-form-adding-product-id' === $column) {
+			echo $meta['link-product'] ?? '';
 		}
 	}
 }
