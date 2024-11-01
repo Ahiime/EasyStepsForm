@@ -533,7 +533,6 @@ class Easystepsform_Admin {
 					'type'            => 'repeatable-fields',
 					'fields'          => array( $name, $price ),
 					'desc'            => '',
-					'ignore_desc_col' => true,
 					'add_btn_label'   => __( 'Add pricing options', 'easystepsform' ),
 				);
 
@@ -543,7 +542,6 @@ class Easystepsform_Admin {
 					'type'            => 'repeatable-fields',
 					'fields'          => array( $note_name ),
 					'desc'            => '',
-					'ignore_desc_col' => true,
 					'add_btn_label'   => __( 'Add radio note', 'easystepsform' ),
 				);
 
@@ -556,11 +554,7 @@ class Easystepsform_Admin {
 						$linked_products,
 						$pricing_option_title,
 						$additional_note,
-						$end,
-						$begin,
 						$stepper_note,
-						$end,
-						$begin,
 						$stepper_options,
 						$end,
 					)
@@ -898,8 +892,6 @@ class Easystepsform_Admin {
 	 */
 	public function add_custom_column( $columns ) {
 		$columns['easy-form-adding-short-code'] = 'ShortCode';
-		$columns['easy-form-adding-form-id'] = 'FormId';
-		$columns['easy-form-adding-product-id'] = 'Product Id';
 		return $columns;
 	}
 

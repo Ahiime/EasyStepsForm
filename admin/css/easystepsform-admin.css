@@ -110,3 +110,7 @@
   table.wp-list-table #is_customizable {
     width: 90px;
   }
+
+  .page-title-action[href*="post_type=easy-step-form-input"] {
+    display: none;
+  }

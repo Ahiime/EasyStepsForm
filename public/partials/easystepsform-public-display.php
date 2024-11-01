@@ -251,20 +251,21 @@ class Easy_Steps_Form_Content {
             <?php echo esc_html( $this->form['pricing-title'] ) ?> *
           </label>
             <?php
-            foreach ( $this->form['price-step'] as $option ) : 
-                $radio_id = uniqid( sanitize_title( $this->form['pricing-title'] ) . '-' );
-              ?>
-                <div class="easy-step-form-radio easy-step-pricing-option">
-                    <label for="<?php echo esc_attr( $radio_id ); ?>"><?php echo esc_html( $option['name'] ); ?></label>
-                    <input type="radio"
-                    id="<?php echo esc_attr( $radio_id ); ?>"
-                    name="<?php echo esc_attr( sanitize_title( $this->form['pricing-title'] ) ); ?>"
-                    value="<?php echo esc_attr( $option['price'] ); ?>"
-                    required
-                    data-rule-required="true"
-                    data-msg-required="Please select a <?php echo esc_attr( $option['name'] ) ?>">
-                </div>
-              <?php endforeach;
+            if( is_array( $this->form['price-step'] ) && ! empty( $this->form['price-step'] ) )
+              foreach ( $this->form['price-step'] as $option ) : 
+                  $radio_id = uniqid( sanitize_title( $this->form['pricing-title'] ) . '-' );
+                ?>
+                  <div class="easy-step-form-radio easy-step-pricing-option">
+                      <label for="<?php echo esc_attr( $radio_id ); ?>"><?php echo esc_html( $option['name'] ); ?></label>
+                      <input type="radio"
+                      id="<?php echo esc_attr( $radio_id ); ?>"
+                      name="<?php echo esc_attr( sanitize_title( $this->form['pricing-title'] ) ); ?>"
+                      value="<?php echo esc_attr( $option['price'] ); ?>"
+                      required
+                      data-rule-required="true"
+                      data-msg-required="Please select a <?php echo esc_attr( $option['name'] ) ?>">
+                  </div>
+                <?php endforeach;
               ?>
           <span class="error1 easy-steps-form-hidden" style="display: none;">
             <i class="error-log fa fa-exclamation-triangle"></i>
@@ -272,43 +273,44 @@ class Easy_Steps_Form_Content {
         </div>
 
         <?php
-        foreach ( $this->form['radio-note'] as $option ) :
-          $uniqid = uniqid( sanitize_title( $option['note-name'] ) . '-' );
-          $uniqid2 = uniqid( sanitize_title( $option['note-name'] ) . '-' ); 
-          $uniqid3 = uniqid( sanitize_title( $option['note-name'] ) . '-' ); 
-          ?>
-          <div class="form-item field hs-form-field">
-            <label for="<?php echo esc_attr( $uniqid ) ?>">
-              <?php echo esc_html( $option['note-name'] ) ?> *
-            </label>
+        if( is_array( $this->form['radio-note'] ) && ! empty( $this->form['radio-note'] ) )
+          foreach ( $this->form['radio-note'] as $option ) :
+            $uniqid = uniqid( sanitize_title( $option['note-name'] ) . '-' );
+            $uniqid2 = uniqid( sanitize_title( $option['note-name'] ) . '-' ); 
+            $uniqid3 = uniqid( sanitize_title( $option['note-name'] ) . '-' ); 
+            ?>
+            <div class="form-item field hs-form-field">
+              <label for="<?php echo esc_attr( $uniqid ) ?>">
+                <?php echo esc_html( $option['note-name'] ) ?> *
+              </label>
 
-              <div class="easy-step-form-radio">
-                  <label for="<?php echo esc_attr( $uniqid2 ); ?>"><?php echo esc_html( 'Oui' ); ?></label>
-                  <input type="radio"
-                  id="<?php echo esc_attr( $uniqid2 ); ?>"
-                  name="<?php echo esc_attr( sanitize_title( $option['note-name'] ) ); ?>"
-                  value="oui"
-                  checked
-                  required
-                  data-rule-required="true"
-                  data-msg-required="Please select a <?php echo esc_attr( $option['note-name'] ) ?>">
-              </div>
-              <div class="easy-step-form-radio">
-                  <label for="<?php echo esc_attr( $uniqid3 ); ?>"><?php echo esc_html( 'Non' ); ?></label>
-                  <input type="radio"
-                  id="<?php echo esc_attr( $uniqid3 ); ?>"
-                  name="<?php echo esc_attr( sanitize_title( $option['note-name'] ) ); ?>"
-                  value="non"
-                  required
-                  data-rule-required="true"
-                  data-msg-required="Please select a <?php echo esc_attr( $option['note-name'] ) ?>">
-              </div>
-            <span class="error1 easy-steps-form-hidden" style="display: none;">
-              <i class="error-log fa fa-exclamation-triangle"></i>
-            </span>
-          </div>
-          <?php
-        endforeach;
+                <div class="easy-step-form-radio">
+                    <label for="<?php echo esc_attr( $uniqid2 ); ?>"><?php echo esc_html( 'Oui' ); ?></label>
+                    <input type="radio"
+                    id="<?php echo esc_attr( $uniqid2 ); ?>"
+                    name="<?php echo esc_attr( sanitize_title( $option['note-name'] ) ); ?>"
+                    value="oui"
+                    checked
+                    required
+                    data-rule-required="true"
+                    data-msg-required="Please select a <?php echo esc_attr( $option['note-name'] ) ?>">
+                </div>
+                <div class="easy-step-form-radio">
+                    <label for="<?php echo esc_attr( $uniqid3 ); ?>"><?php echo esc_html( 'Non' ); ?></label>
+                    <input type="radio"
+                    id="<?php echo esc_attr( $uniqid3 ); ?>"
+                    name="<?php echo esc_attr( sanitize_title( $option['note-name'] ) ); ?>"
+                    value="non"
+                    required
+                    data-rule-required="true"
+                    data-msg-required="Please select a <?php echo esc_attr( $option['note-name'] ) ?>">
+                </div>
+              <span class="error1 easy-steps-form-hidden" style="display: none;">
+                <i class="error-log fa fa-exclamation-triangle"></i>
+              </span>
+            </div>
+            <?php
+          endforeach;
         ?>
 
         <input type="button" data-page="<?php echo esc_attr( $pages ) ?>" name="previous" class="previous action-button" value="Précédent" />
@@ -335,10 +337,11 @@ class Easy_Steps_Form_Content {
       <form id="easy-steps-forms"  class="easy-steps-form-steps" accept-charset="UTF-8" enctype="multipart/form-data" method="POST">
         <ul id="progressbar">
           <?php
-            foreach ($this->steps as $step) {
-              ?><li class="<?= 0 === $compt ? 'active' : '' ?>"><?php echo esc_html( $step['panel-title'] ?? '' ) ?></li><?php
-              $compt++;
-            }
+            if( is_array( $this->steps ) && ! empty( $this->steps ) )
+              foreach ($this->steps as $step) {
+                ?><li class="<?= 0 === $compt ? 'active' : '' ?>"><?php echo esc_html( $step['panel-title'] ?? '' ) ?></li><?php
+                $compt++;
+              }
           ?>
           <li>Validation</li>
           <li>Merci</li>
@@ -346,50 +349,51 @@ class Easy_Steps_Form_Content {
 
         <?php
           $page = 1;
-          foreach ($this->steps as $step) {
-            ?>
-              <fieldset>
-                <h2 class="fs-title"><?php echo esc_html( $step['title'] ?? '' ) ?></h2>
-                <h3 class="fs-subtitle"><?php echo esc_html( $step['description'] ?? '' ) ?></h3>
-                <?php
-                  foreach ($step['field'] as $field) {
-                    $uniq_key = uniqid( sanitize_title( $field['title'] ) . '-' );
-                    
-                    ?>
-                      <div class="hs_<?php echo esc_attr( $field['title'] ) ?> field hs-form-field">
+          if( is_array( $this->steps ) && ! empty( $this->steps ) )
+            foreach ($this->steps as $step) {
+              ?>
+                <fieldset>
+                  <h2 class="fs-title"><?php echo esc_html( $step['title'] ?? '' ) ?></h2>
+                  <h3 class="fs-subtitle"><?php echo esc_html( $step['description'] ?? '' ) ?></h3>
+                  <?php
+                    foreach ($step['field'] as $field) {
+                      $uniq_key = uniqid( sanitize_title( $field['title'] ) . '-' );
+                      
+                      ?>
+                        <div class="hs_<?php echo esc_attr( $field['title'] ) ?> field hs-form-field">
 
-                        <label for="<?php echo esc_attr( $uniq_key ) ?>"><?php echo esc_html( $field['title'] ) ?> <?php echo esc_html( 'yes' === $field['required'] ? '*' : '' ) ?></label>
+                          <label for="<?php echo esc_attr( $uniq_key ) ?>"><?php echo esc_html( $field['title'] ) ?> <?php echo esc_html( 'yes' === $field['required'] ? '*' : '' ) ?></label>
 
-                        
-                        <?php echo wp_kses( 
-                            $this->get_input( 
-                            $field['type'], 
-                            $field['title'], 
-                            $uniq_key, 
-                            'yes' === $field['required'] ? 'true' : 'false', 
-                            $field['radio'] ?? array(), 
-                            $field['default'], 
-                            $field['placeholder']
-                            ),
-                            Easy_Steps_Form_Admin_Tools::get_allowed_tags()
-                          ) ?>
-                        <span class="error1 easy-steps-form-hidden" style="display: none;">
-                          <i class="error-log fa fa-exclamation-triangle"></i>
-                        </span>
-                      </div>
-                    <?php
-                  }
-                ?>
-      
-                <!-- End Total Number of Constituents in Your Database Field -->
-                 <?php if( $page - 1 > 0) {
-                  ?><input type="button" data-page="<?php echo esc_attr( $page - 1 ) ?>" name="previous" class="previous action-button" value="Précédent" /><?php
-                 } ?>
-                <input type="button" data-page="<?php echo esc_attr( $page ) ?>" name="next" class="next action-button" value="Suivant" />
-              </fieldset>
-            <?php
-            $page++;
-          }
+                          
+                          <?php echo wp_kses( 
+                              $this->get_input( 
+                              $field['type'], 
+                              $field['title'], 
+                              $uniq_key, 
+                              'yes' === $field['required'] ? 'true' : 'false', 
+                              $field['radio'] ?? array(), 
+                              $field['default'], 
+                              $field['placeholder']
+                              ),
+                              Easy_Steps_Form_Admin_Tools::get_allowed_tags()
+                            ) ?>
+                          <span class="error1 easy-steps-form-hidden" style="display: none;">
+                            <i class="error-log fa fa-exclamation-triangle"></i>
+                          </span>
+                        </div>
+                      <?php
+                    }
+                  ?>
+        
+                  <!-- End Total Number of Constituents in Your Database Field -->
+                  <?php if( $page - 1 > 0) {
+                    ?><input type="button" data-page="<?php echo esc_attr( $page - 1 ) ?>" name="previous" class="previous action-button" value="Précédent" /><?php
+                  } ?>
+                  <input type="button" data-page="<?php echo esc_attr( $page ) ?>" name="next" class="next action-button" value="Suivant" />
+                </fieldset>
+              <?php
+              $page++;
+            }
 
           echo wp_kses( $this->get_final_content(), Easy_Steps_Form_Admin_Tools::get_allowed_tags() );
         ?>
