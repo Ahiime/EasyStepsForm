@@ -14,11 +14,11 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Easy Steps Form
- * Plugin URI:        https:// https://github.com/Ahiime/
+ * Plugin URI:        https://github.com/Ahiime/EasyStepsForm
  * Description:       This multistep form plugin simplifies the creation of multi-stage forms, providing users with a smooth and guided experience. Designed for easy integration and high customizability, it allows adding progressive form sections with clear steps, saving user responses at each step and validating input in real-time. Ideal for registration forms, surveys, payment processes, and any other multi-step workflows, this plugin is straightforward to set up and supports intuitive navigation with Next and Previous buttons, progress indicators, and customization options for each step.
  * Version:           1.0.0
  * Author:            Ahime
- * Author URI:        https://www.blyd3d.com/
+ * Author URI:        https://github.com/Ahiime
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       easystepsform
