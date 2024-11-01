@@ -100,6 +100,7 @@
                 data: formData,
                 contentType: false,
                 processData: false,
+                dataType: 'json',
                 success: function (response) {
 
                     if(typeof response.success !== "undefined") {
@@ -112,11 +113,10 @@
                         current_fs.removeClass('easy-steps-form-show');
                         current_fs.addClass('easy-steps-form-hidden');
                         
-                        document.location.href = data.cart_url;
+                        if (response.cart_url) {
+                            document.location.href = response.cart_url;
+                        }
                     }
-                },
-                error: function (xhr, status, error) {
-                    
                 }
             });
         })
