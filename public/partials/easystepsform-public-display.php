@@ -318,9 +318,9 @@ class Easy_Steps_Form_Content {
       </fieldset>
 
       <fieldset>
-        <h2 class="fs-title">It's on the way!</h2>
-        <h3 class="fs-subtitle">Thank you for trying out our marketing grader, please go check your email for your
-          fundraising report card and some helpful tips to improve it!</h3>
+        <h3 class="fs-subtitle"><?php echo esc_html( $this->form['final-step-msg'] ?? 'It\'s on way' ) ?></h3>
+        <h2 class="fs-title"><?php echo esc_html( $this->form['final-step-title'] ?? 'hank you for trying out our marketing grader, please go check your email for your
+          fundraising report card and some helpful tips to improve it!' ) ?></h2>
       </fieldset>
     <?php
 

@@ -616,6 +616,24 @@ class Easystepsform_Admin {
 					'add_btn_label'   => __( 'Add step', 'easystepsform' ),
 				);
 
+				$final_step_title = array(
+					'title'   => __( 'Final step title', 'easystepsform' ),
+					'name'    => 'easy-form-adding[final-step-title]',
+					'type'    => 'text',
+					'desc'    => __( 'Define the final step title', 'easystepsform' ),
+					'default' => 'It\'s on the way!'
+				);
+				
+
+				$final_step_msg = array(
+					'title'   => __( 'Final step message', 'easystepsform' ),
+					'name'    => 'easy-form-adding[final-step-msg]',
+					'type'    => 'text',
+					'desc'    => __( 'Define the final step message', 'easystepsform' ),
+					'default' => 'Thank you for trying out our marketing grader, please go check your email for your
+          fundraising report card and some helpful tips to improve it!',
+				);
+
 				$end = array( 'type' => 'sectionend' );
 
 				$settings = apply_filters(
@@ -623,6 +641,10 @@ class Easystepsform_Admin {
 					array(
 						$begin,
 						$stepper_options,
+						$end,
+						$begin,
+						$final_step_title,
+						$final_step_msg,
 						$end,
 					)
 				);
